@@ -1,13 +1,7 @@
-// ================================
-// next.config.js
-// ================================
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    experimental: {
-      appDir: true,
-    },
     images: {
-      domains: ['localhost', 'clerk.dev'],
+      domains: ['localhost', 'img.clerk.com', 'images.clerk.dev'],
     },
     env: {
       CUSTOM_KEY: process.env.CUSTOM_KEY,
@@ -20,6 +14,8 @@ const nextConfig = {
         },
       ]
     },
+    // Configuración corregida para Clerk v6
+    serverExternalPackages: ['@clerk/nextjs'],
   }
   
   module.exports = nextConfig

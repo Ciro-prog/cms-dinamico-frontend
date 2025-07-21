@@ -1,0 +1,44 @@
+node_modules
+
+# Dependencias
+node_modules
+
+# Salidas de compilación
+.next
+out
+dist
+build
+
+# Archivos de logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
+
+# Archivos de entorno
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Archivos de configuración de usuario
+.vscode
+.idea
+
+# Salidas de pruebas
+coverage
+
+# Archivos temporales
+*.swp
+*.swo
+
+# Archivos de lock antiguos
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+# (Descomenta el lockfile que uses y elimina los otros si es necesario)

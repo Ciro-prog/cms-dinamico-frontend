@@ -1,11 +1,11 @@
 // ================================
-// src/app/layout.tsx (Root Layout)
+// src/app/layout.tsx - Actualizado para Clerk v6
 // ================================
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import { ClerkProvider } from '@clerk/nextjs'
 import { esES } from '@clerk/localizations'
-import './globals.css'
+import '../style/global.css'
 import { Providers } from '@/components/providers'
 import { Toaster } from '@/components/ui/toaster'
 
@@ -42,6 +42,8 @@ export default function RootLayout({
           card: 'shadow-lg',
         }
       }}
+      signInFallbackRedirectUrl="/admin"
+      signUpFallbackRedirectUrl="/admin"
     >
       <html lang="es" suppressHydrationWarning>
         <body className={inter.className}>

@@ -1,11 +1,11 @@
 // ================================
-// src/app/admin/layout.tsx (Admin Layout)
+// src/app/admin/layout.tsx - Actualizado para Clerk v6
 // ================================
 import { Sidebar } from '@/components/layout/Sidebar'
 import { Header } from '@/components/layout/Header'
 import { BreadcrumbNav } from '@/components/layout/BreadcrumbNav'
 import { redirect } from 'next/navigation'
-import { auth } from '@clerk/nextjs'
+import { auth } from '@clerk/nextjs/server'
 import { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -21,7 +21,7 @@ export default async function AdminLayout({
   const { userId } = auth()
   
   if (!userId) {
-    redirect('/login')
+    redirect('/sign-in')
   }
 
   return (
