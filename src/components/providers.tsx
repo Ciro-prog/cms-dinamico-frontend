@@ -1,24 +1,12 @@
 // ================================
-// src/components/providers.tsx - Corregido
+// 7. src/components/providers.tsx (ACTUALIZADO)
 // ================================
 'use client'
 
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { ReactQueryDevtools } from '@tanstack/react-query-devtools'
 import { ThemeProvider } from '@/components/theme-provider'
 import { useState } from 'react'
-import dynamic from 'next/dynamic'
-
-// Importar ReactQueryDevtools solo en desarrollo
-const ReactQueryDevtools = dynamic(
-  () => 
-    import('@tanstack/react-query-devtools').then((mod) => ({
-      default: mod.ReactQueryDevtools,
-    })),
-  {
-    ssr: false,
-    loading: () => null,
-  }
-)
 
 export function Providers({ children }: { children: React.ReactNode }) {
   const [queryClient] = useState(() => new QueryClient({
@@ -26,10 +14,6 @@ export function Providers({ children }: { children: React.ReactNode }) {
       queries: {
         staleTime: 60 * 1000, // 1 minute
         refetchOnWindowFocus: false,
-        retry: 1,
-      },
-      mutations: {
-        retry: 1,
       },
     },
   }))
@@ -44,10 +28,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
       >
         {children}
       </ThemeProvider>
-      {/* Solo mostrar devtools en desarrollo */}
-      {process.env.NODE_ENV === 'development' && (
-        <ReactQueryDevtools initialIsOpen={false} />
-      )}
+      <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   )
 }

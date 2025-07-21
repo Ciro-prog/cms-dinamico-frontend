@@ -1,18 +1,1 @@
-//================================
-// src/lib/auth.ts
-// ================================
-import { auth, clerkMiddleware, createRouteMatcher } from '@clerk/nextjs/server'
-
-const isPublicRoute = createRouteMatcher([
-  '/',
-  '/login(.*)',
-  '/api/webhooks(.*)'
-])
-
-export default clerkMiddleware((auth, req) => {
-  if (!isPublicRoute(req)) auth().protect()
-})
-
-export const config = {
-  matcher: ['/((?!.*\\..*|_next).*)', '/', '/(api|trpc)(.*)'],
-}
+export { auth } from '@clerk/nextjs/server'

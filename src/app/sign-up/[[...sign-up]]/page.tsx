@@ -1,6 +1,8 @@
 // ================================
-// src/app/sign-up/[[...sign-up]]/page.tsx
+// src/app/sign-up/[[...sign-up]]/page.tsx (CORREGIDO)
 // ================================
+'use client'
+
 import { SignUp } from '@clerk/nextjs'
 
 export default function SignUpPage() {
@@ -16,8 +18,14 @@ export default function SignUpPage() {
             elements: {
               rootBox: "mx-auto",
               card: "shadow-lg",
+              formButtonPrimary: "bg-blue-600 hover:bg-blue-700 text-sm normal-case",
+            },
+            variables: {
+              colorPrimary: "#2563eb",
             }
           }}
+          redirectUrl="/admin"
+          afterSignUpUrl="/admin"
         />
       </div>
     </div>

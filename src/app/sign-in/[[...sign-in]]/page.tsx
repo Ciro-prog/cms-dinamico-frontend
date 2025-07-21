@@ -1,3 +1,8 @@
+// ================================
+// src/app/sign-in/[[...sign-in]]/page.tsx (CORREGIDO)
+// ================================
+'use client'
+
 import { SignIn } from '@clerk/nextjs'
 
 export default function SignInPage() {
@@ -13,8 +18,14 @@ export default function SignInPage() {
             elements: {
               rootBox: "mx-auto",
               card: "shadow-lg",
+              formButtonPrimary: "bg-blue-600 hover:bg-blue-700 text-sm normal-case",
+            },
+            variables: {
+              colorPrimary: "#2563eb",
             }
           }}
+          redirectUrl="/admin"
+          afterSignInUrl="/admin"
         />
       </div>
     </div>

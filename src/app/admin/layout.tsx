@@ -1,5 +1,5 @@
 // ================================
-// src/app/admin/layout.tsx - Actualizado para Clerk v6
+// 4. src/app/admin/layout.tsx (CORREGIDO PARA V6)
 // ================================
 import { Sidebar } from '@/components/layout/Sidebar'
 import { Header } from '@/components/layout/Header'
@@ -18,7 +18,7 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  const { userId } = auth()
+  const { userId } = await auth()
   
   if (!userId) {
     redirect('/sign-in')

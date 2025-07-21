@@ -1,7 +1,8 @@
 // ================================
-// src/lib/api.ts - Actualizado para Clerk v6
+// 5. src/lib/api.ts (ACTUALIZADO PARA V6)
 // ================================
 import axios, { AxiosResponse, AxiosError } from 'axios'
+import { auth } from '@clerk/nextjs/server'
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000'
 
@@ -17,9 +18,12 @@ export const apiClient = axios.create({
 apiClient.interceptors.request.use(
   async (config) => {
     try {
-      // En Clerk v6, podemos usar window.Clerk directamente
-      if (typeof window !== 'undefined' && window.Clerk?.session) {
-        const token = await window.Clerk.session.getToken()
+      // En el cliente, necesitamos usar useAuth() hook
+      // En el servidor, usamos auth() function
+      if (typeof window === 'undefined') {
+        // Server side
+        const { getToken } = await auth()
+        const token = await getToken()
         
         if (token) {
           config.headers.Authorization = `Bearer ${token}`
@@ -45,30 +49,29 @@ apiClient.interceptors.response.use(
     // Manejo global de errores
     if (error.response?.status === 401) {
       // Redirect to login
-      if (typeof window !== 'undefined') {
-        window.location.href = '/sign-in'
-      }
+      window.location.href = '/sign-in'
     }
     
     return Promise.reject(error)
   }
 )
 
+
 // API Methods (sin cambios)
 export const api = {
-  // Business Types
-  getBusinessTypes: () => apiClient.get('/api/admin/business-types'),
-  getBusinessType: (tipo: string) => apiClient.get(`/api/admin/business-types/${tipo}`),
-  createBusinessType: (data: any) => apiClient.post('/api/admin/business-types', data),
-  updateBusinessType: (tipo: string, data: any) => apiClient.put(`/api/admin/business-types/${tipo}`, data),
-  deleteBusinessType: (tipo: string) => apiClient.delete(`/api/admin/business-types/${tipo}`),
+ // Business Types
+ getBusinessTypes: () => apiClient.get('/api/admin/business-types'),
+ getBusinessType: (tipo: string) => apiClient.get(`/api/admin/business-types/${tipo}`),
+ createBusinessType: (data: any) => apiClient.post('/api/admin/business-types', data),
+ updateBusinessType: (tipo: string, data: any) => apiClient.put(`/api/admin/business-types/${tipo}`, data),
+ deleteBusinessType: (tipo: string) => apiClient.delete(`/api/admin/business-types/${tipo}`),
 
-  // Business Instances
-  getBusinesses: () => apiClient.get('/api/admin/businesses'),
-  getBusiness: (businessId: string) => apiClient.get(`/api/admin/businesses/${businessId}`),
-  createBusiness: (data: any) => apiClient.post('/api/admin/businesses', data),
-  updateBusiness: (businessId: string, data: any) => apiClient.put(`/api/admin/businesses/${businessId}`, data),
-  deleteBusiness: (businessId: string) => apiClient.delete(`/api/admin/businesses/${businessId}`),
+ // Business Instances
+ getBusinesses: () => apiClient.get('/api/admin/businesses'),
+ getBusiness: (businessId: string) => apiClient.get(`/api/admin/businesses/${businessId}`),
+ createBusiness: (data: any) => apiClient.post('/api/admin/businesses', data),
+ updateBusiness: (businessId: string, data: any) => apiClient.put(`/api/admin/businesses/${businessId}`, data),
+ deleteBusiness: (businessId: string) => apiClient.delete(`/api/admin/businesses/${businessId}`),
 
   // Users
   getUsers: () => apiClient.get('/api/admin/users'),
